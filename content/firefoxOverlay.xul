@@ -11,23 +11,24 @@
 
 <!-- Firefox -->
 <popupset>
-  <popup id="clipmenu">
+  <menupopup id="clipmenu">
     <menuitem id="clipmenu1" label="1" onclick="backendInfo.clickCheck(1)" tooltiptext="Detect backend software of this site" />
     <menuitem id="clipmenu2" label="2" onclick="backendInfo.clickCheck(2)" tooltiptext="Detect backend software of this site" />
 <!--    <checkbox id="clipmenuAuto" label="Auto Detect" checked="false" /> -->
-  </popup>
+  </menupopup>
 </popupset>
 
 <statusbar id="status-bar">
 	<statusbarpanel id="backendinfo_status"
-	    context="clipmenu"
-	    popup="clipmenu"
 		label=""
+        onclick="backendInfo.clickStatusIcon()"
         tooltiptext="">
         <box id="backendinfo_statusbox"
             title=""
             width="16"
             height="16"
+            context="clipmenu"
+            popup="clipmenu"
             tooltiptext="Detect backend software"
             />
 <!--        <progressmeter
