@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://backendinfo/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://backendinfo/locale/backendinfo.dtd">
+<overlay id="backendinfo-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="filters.js"/>
+  <script src="overlay.js"/>
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="backendinfo-strings" src="chrome://backendinfo/locale/backendinfo.properties"/>
+  </stringbundleset>
+
+<!-- Firefox -->
+<popupset>
+  <popup id="clipmenu">
+    <menuitem id="clipmenu1" label="1" onclick="backendInfo.clickCheck(1)" tooltiptext="Detect backend software of this site" />
+    <menuitem id="clipmenu2" label="2" onclick="backendInfo.clickCheck(2)" tooltiptext="Detect backend software of this site" />
+<!--    <checkbox id="clipmenuAuto" label="Auto Detect" checked="false" /> -->
+  </popup>
+</popupset>
+
+<statusbar id="status-bar">
+	<statusbarpanel id="backendinfo_status"
+	    context="clipmenu"
+	    popup="clipmenu"
+		label=""
+        tooltiptext="">
+        <box id="backendinfo_statusbox"
+            title=""
+            width="16"
+            height="16"
+            tooltiptext="Detect backend software"
+            />
+<!--        <progressmeter
+            id="backendinfo_progress"
+            mode="determined"
+            value="50"/>
+-->    </statusbarpanel>        
+</statusbar>
+</overlay>
