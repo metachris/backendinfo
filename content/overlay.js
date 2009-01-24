@@ -150,6 +150,7 @@ function BackendInfo(filters) {
                 return ;
             }
             IMAGE_TMP = false;
+            this.foundBase = false;
             this.setStatusImage(IMAGE_WAIT);
         }
 
@@ -240,8 +241,12 @@ function BackendInfo(filters) {
         if (html == 404) {
             LOG("Caching Complete Of: " + url + " >- 404 -- Not Found -- No Checks Performed");
             if ((backendInfo.requests == 0) && (backendInfo.testing)) {
-                if (!(backendInfo.foundBase)) {
-                    backendInfo.testing = false;
+                LOG("foundBase: " + backendInfo.foundBase);
+                backendInfo.testing = false;
+                
+                if (backendInfo.foundBase) {
+                    backendInfo.setStatusImage(IMAGE_TEMP);
+                } else {
                     backendInfo.results[backendInfo.check_url] = 404;
                     backendInfo.showResult();
                 }
