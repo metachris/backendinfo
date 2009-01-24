@@ -28,12 +28,19 @@ function BackendInfo(filters) {
     this.check_url = "";    // either base_url or node_url, depending on type of check
     
     this.testing = false;   // true while filters are being tested
+    this.instantCheck = false; // Popup problems with FF2. Directly check node on click!
+    this.hasPopup = true;
     
     /* Status for a check-run over all filters */
     this.requests = 0;
     
     /* On Load -- Initialization */
     this.load = function() {
+        if (!(document.getElementById("clipmenu"))) {
+            LOG("no clipmenu");
+            this.instantCheck = true;
+            this.hasPopup = false;
+        }
         this.container = gBrowser.tabContainer;
         this.container.addEventListener("TabSelect", changeTab, false);
 
@@ -41,6 +48,13 @@ function BackendInfo(filters) {
         this.appcontent.addEventListener("DOMContentLoaded", changeTab, false);
     }
 
+    this.clickStatusIcon = function() {
+        LOG("click " + this.instantCheck);
+        if (this.instantCheck) {
+            this.checkURL(this.node_url);
+        }
+    }
+    
     /* Setting the image in the Statusbar */
     this.setStatusImage = function(img) {
         if (!(img)) { img = IMAGE_INFO; }
@@ -60,8 +74,10 @@ function BackendInfo(filters) {
             this.node_url = "";
             
             // Popup Entries
-            document.getElementById("clipmenu1").label = url;
-            document.getElementById("clipmenu2").style.display = "none";
+            if (this.hasPopup) {
+                document.getElementById("clipmenu1").label = url;
+                document.getElementById("clipmenu2").style.display = "none";
+            }
 
             this.setStatusImage(IMAGE_MAIN);
             document.getElementById("backendinfo_statusbox").tooltipText = "Visit a website first";
@@ -77,7 +93,7 @@ function BackendInfo(filters) {
             // Set statusbar to results
             this.showResult(this.results[this.node_url]);
         } else {
-            // Reset Statusbar to Main
+            // Reset Statusbar to Main    
             this.setStatusImage(IMAGE_MAIN);
             document.getElementById("backendinfo_statusbox").tooltipText = "Detect backend software";        
         }
@@ -94,13 +110,15 @@ function BackendInfo(filters) {
         node_url = (s.indexOf("/") == s.lastIndexOf("/")) ? base_url : s.substr(0, s.lastIndexOf("/"));
         this.node_url = prefix + node_url;
         
-        // Prepare PopUp Menu
-        document.getElementById("clipmenu1").label = this.base_url;
-        if (this.base_url == this.node_url) {
-            document.getElementById("clipmenu2").style.display = "none";
-        } else {
-            document.getElementById("clipmenu2").label = this.node_url;
-            document.getElementById("clipmenu2").style.display = "block";        
+        if (this.hasPopup) {
+            // Prepare PopUp Menu
+            document.getElementById("clipmenu1").label = this.base_url;
+            if (this.base_url == this.node_url) {
+                document.getElementById("clipmenu2").style.display = "none";
+            } else {
+                document.getElementById("clipmenu2").label = this.node_url;
+                document.getElementById("clipmenu2").style.display = "block";        
+            }
         }
     }
 
@@ -123,7 +141,6 @@ function BackendInfo(filters) {
         this.check_url = url;
         
         if (this.results[this.check_url]) {
-            LOG("Result already cached");
             this.showResult(this.results[url]);
             return ;
         }
@@ -134,7 +151,7 @@ function BackendInfo(filters) {
         /* Cache filter url's */
         for (var i=0; i<this.filters.length; i++) {
             if (this.testing) {
-                LOG("testing filter " + i + ": " + this.filters[i].name);
+                // LOG("testing filter " + i + ": " + this.filters[i].name);
                 /* Step through each requirement of the given filter plugin */
                 for (var j=0; j<this.filters[i].require.length; j++) {
                     this.cacheURL(url + this.filters[i].require[j].url, this.cachingComplete);                    
