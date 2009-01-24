@@ -72,3 +72,33 @@ filters.push({
         )
     });
 
+
+/* === Mixed Backends === */
+filters.push({
+    name: "Typo3",
+    require: new Array(
+        { url: '/', contains: new Array('This website is powered by TYPO3') },
+        { url: '/', contains: new Array('templates/css/typo3.') }
+    )
+});
+
+filters.push({
+    name: "Django",
+    require: new Array(
+        { url: '/admin', contains: new Array('Django') }
+    )
+});
+
+filters.push({
+    name: "MediaWiki",
+    require: new Array(
+        { url: '/', contains: new Array('/w/index.php?title=MediaWiki:') }
+    )
+});
+
+filters.push({
+    name: "Apache File Browser",
+    require: new Array(
+        { url: '/', contains: new Array('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">', '<title>Index of', '<table><tr><th><img src="/icons/') }
+    )
+});
