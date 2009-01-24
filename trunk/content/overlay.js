@@ -292,6 +292,13 @@ function BackendInfo(filters) {
                             // If child, use parent image?
                             if (backendInfo.filters[i].image) {
                                 IMAGE_TEMP = backendInfo.filters[i].image;
+                            } else {
+                                // Attach image to imageless filter
+                                if (IMAGE_TEMP) {
+                                    backendInfo.filters[i].image = IMAGE_TEMP;
+                                } else {
+                                    backendInfo.filters[i].image = IMAGE_INFO;                                
+                                }
                             }
                             // LOG(backendInfo.filters[i].image + " -- " + IMAGE_TEMP);
                             
@@ -327,11 +334,7 @@ function BackendInfo(filters) {
         // 404 marks a checked url without a detected backend
         if ((filter) && (filter != 404)) {
             // LOG("IMAGE_TEMP: " + IMAGE_TEMP + "  -- filter.image: " + filter.image);
-            if (filter.image) {
-                this.setStatusImage(filter.image);
-            } else {
-                this.setStatusImage(IMAGE_TEMP);
-            }
+            this.setStatusImage(filter.image);
             document.getElementById("backendinfo_statusbox").tooltipText = filter.name;
         } else {
             // Finished Check without Valid Results
