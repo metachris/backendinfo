@@ -11,6 +11,7 @@ var IMAGE_WAIT = "chrome://backendinfo/skin/load1.gif";
 var IMAGE_ERROR = "chrome://backendinfo/skin/error.png";
 var IMAGE_COG = "chrome://backendinfo/skin/cog.png";
 var IMAGE_ID = "backendinfo_statusbox";
+var IMAGE_TEMP = false; // Parent filter set this for undefined children filter images
 
 function changeTab() {
     backendInfo.setURL(content.location);
@@ -28,6 +29,7 @@ function BackendInfo(filters) {
     this.check_url = "";    // either base_url or node_url, depending on type of check
     
     this.testing = false;   // true while filters are being tested
+    this.foundBase = false; // true if a basic filter is found, while checking the children filters
     this.instantCheck = false; // Popup problems with FF2. Directly check node on click!
     this.hasPopup = true;
     
@@ -49,7 +51,6 @@ function BackendInfo(filters) {
     }
 
     this.clickStatusIcon = function() {
-        LOG("click " + this.instantCheck);
         if (this.instantCheck) {
             this.checkURL(this.node_url);
         }
@@ -131,30 +132,50 @@ function BackendInfo(filters) {
         }
     }
         
-    /* Check a given URL (for all filters) */
-    this.checkURL = function(url) {
+    /* Check a given URL (using either (1) all basic filters, or (2) all filters with a given parentFilter) */
+    this.checkURL = function(url, parentFilter) {
         if (url.indexOf("//") == -1) {
             return ;
         }
         
-        LOG("check: " + url);
+        LOG("checkURL: " + url + " parent: " + parentFilter);
         this.check_url = url;
-        
-        if (this.results[this.check_url]) {
-            this.showResult(this.results[url]);
-            return ;
+
+        // Cache check        
+        // Only if it's not an in depth search!
+        if (!(parentFilter)) { 
+            // Check if already cached result
+            if (this.results[this.check_url]) {
+                this.showResult(this.results[url]);
+                return ;
+            }
+            IMAGE_TMP = false;
+            this.setStatusImage(IMAGE_WAIT);
         }
-        
+
         this.testing = true;
-        this.setStatusImage(IMAGE_WAIT);
         
         /* Cache filter url's */
         for (var i=0; i<this.filters.length; i++) {
             if (this.testing) {
-                // LOG("testing filter " + i + ": " + this.filters[i].name);
-                /* Step through each requirement of the given filter plugin */
-                for (var j=0; j<this.filters[i].require.length; j++) {
-                    this.cacheURL(url + this.filters[i].require[j].url, this.cachingComplete);                    
+                if (parentFilter) {
+                    // Only use filters with this parent
+                    if (this.filters[i]["parent"]) {
+                        if (this.filters[i]["parent"] == parentFilter.name) {
+                            LOG("testing child filter: " + this.filters[i].name);
+                            for (var j=0; j<this.filters[i].require.length; j++) {
+                                this.cacheURL(url + this.filters[i].require[j].url, this.cachingComplete);                    
+                            }                            
+                        }
+                    }
+                } else {
+                    // Only use filters without parents now
+                    if (!(this.filters[i]["parent"])) {
+                        LOG("testing filter: " + this.filters[i].name);
+                        for (var j=0; j<this.filters[i].require.length; j++) {
+                            this.cacheURL(url + this.filters[i].require[j].url, this.cachingComplete);                    
+                        }
+                    }
                 }
             }
         }
@@ -183,7 +204,6 @@ function BackendInfo(filters) {
      
     /* Saves an URL via HttpRequest to the cache, and triggers a callback if completed */       
     this.saveURL = function(url, callback) {
-        LOG("Save url: " + url);
         var httpRequest = null;
         
         httpRequest = new XMLHttpRequest();        
@@ -214,11 +234,18 @@ function BackendInfo(filters) {
         // Only process, if testing still in progress (if nothing else is found) 
         backendInfo.requests -= 1;
 //        LOG("Requests (minus current): " + backendInfo.requests);
-        
+        LOG("requests open: " + backendInfo.requests);
         if (!(backendInfo.testing)) { return ; }
         
         if (html == 404) {
             LOG("Caching Complete Of: " + url + " >- 404 -- Not Found -- No Checks Performed");
+            if ((backendInfo.requests == 0) && (backendInfo.testing)) {
+                if (!(backendInfo.foundBase)) {
+                    backendInfo.testing = false;
+                    backendInfo.results[backendInfo.check_url] = 404;
+                    backendInfo.showResult();
+                }
+            }
             return ;
         }
         
@@ -251,10 +278,23 @@ function BackendInfo(filters) {
                         if (itemFound) {
                             // FOUND !!! STOP NOW :-)
                             // This item matches all requirements!!
+                            // Stop processing of further incoming requests
+                            LOG("ITEM FOUND");
                             backendInfo.testing = false;
+                            backendInfo.foundBase = true;
+                            // If child, use parent image?
+                            if (backendInfo.filters[i].image) {
+                                IMAGE_TEMP = backendInfo.filters[i].image;
+                            }
+                            LOG(backendInfo.filters[i].image + " -- " + IMAGE_TEMP);
+                            
+                            // Display Results
                             backendInfo.results[backendInfo.check_url] = backendInfo.filters[i];    
                             backendInfo.showResult(backendInfo.filters[i]);
-
+                            
+                            // Check if this Result has children
+                            backendInfo.checkFilterChildren(backendInfo.filters[i]);
+                            
                             return ;
                         }
                     } // End If last
@@ -263,11 +303,14 @@ function BackendInfo(filters) {
         } // End for each filter
         
         /* No filter applies! */
+         LOG("requests: " + backendInfo.requests + " testing: " + backendInfo.testing + " foundBase: " + backendInfo.foundBase);
         if ((backendInfo.requests == 0) && (backendInfo.testing)) {
             // All requests are back, but none are found valid!
-            backendInfo.testing = false;
-            backendInfo.results[backendInfo.check_url] = 404;
-            backendInfo.showResult();
+            if (!(backendInfo.foundBase)) {
+                backendInfo.testing = false;
+                backendInfo.results[backendInfo.check_url] = 404;
+                backendInfo.showResult();
+            }
         }
 
     } // End cachingComplete
@@ -276,7 +319,7 @@ function BackendInfo(filters) {
     this.showResult = function(filter) {
         // 404 marks a checked url without a detected backend
         if ((filter) && (filter != 404)) {
-            this.setStatusImage(filter.image);
+            this.setStatusImage(IMAGE_TEMP);
             document.getElementById("backendinfo_statusbox").tooltipText = filter.name;
         } else {
             // Finished Check without Valid Results
@@ -284,7 +327,21 @@ function BackendInfo(filters) {
             document.getElementById("backendinfo_statusbox").tooltipText = "Backend was not identified";
         }
     }
-    
+
+    /* If a basic filter is recognized, check for children of this filter */
+    this.checkFilterChildren = function(filter) {
+        LOG("checking for children of " + filter.name);
+        for (var i=0; i<this.filters.length; i++) {
+            if (this.filters[i].parent) {
+                if (this.filters[i].parent == filter.name) {
+                    // As long as at least 1 filter has this as parent, start a new checkrun!
+                    // LOG("Subfilter: " + this.filters[i].name);
+                    this.checkURL(this.check_url, filter);
+                    return ;
+                }
+            } 
+        }
+    }    
 }
 
 window.addEventListener("load", function(e) { 
