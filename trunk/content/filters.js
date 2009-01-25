@@ -1,23 +1,5 @@
 var filters = new Array();
 
-filters.push({
-    name: "Drupal 6.x",
-    image: "chrome://backendinfo/skin/drupal.png",
-    require: new Array(
-        { url: '/user/login', contains: new Array('modules/system/defaults.css', '</body>') },
-        { url: '/?q=user/login', contains: new Array('modules/system/defaults.css', '</body>') }
-    )
-});
-
-filters.push({
-    name: "Drupal 5.x",
-    image: "chrome://backendinfo/skin/drupal.png",
-    require: new Array(
-        { url: '/user/login', contains: new Array('modules/system/defaults.css', '</BODY>') },
-        { url: '/?q=user/login', contains: new Array('modules/system/defaults.css', '</BODY>') }
-    )
-});
-
 /* === WORDPRESS 2.x Base Filter ===*/
 filters.push({
     name: "Wordpress 2.x",
