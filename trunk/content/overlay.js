@@ -144,7 +144,17 @@ function BackendInfo(filters) {
 
     /* Click on a detect popup entry */
     this.clickCheck = function(i) {    
-        if (i == 2) {
+        if (i == 3) {
+            // Click on custom url
+            url = prompt("URL to check:", this.node_url);
+            if (url) {
+                if (url.substr(url.length-1) == "/") {
+                    url = url.substr(0, url.length-1);
+                }
+                LOG("custom url: " + url);
+                this.checkURL(url, false, true);
+            }
+        } else if (i == 2) {
             this.checkURL(this.node_url, false, true);
         } else {
             this.checkURL(this.base_url, false, true);
@@ -286,7 +296,7 @@ function BackendInfo(filters) {
         if (!(backendInfo.testing)) { return ; }
         
         if (html == 404) {
-            LOG("404: " + url + " -> skip");
+            // LOG("404: " + url + " -> skip");
             if ((backendInfo.requests == 0) && (backendInfo.testing)) {
                 // LOG("foundBase: " + backendInfo.foundBase);
                 backendInfo.testing = false;
@@ -301,7 +311,8 @@ function BackendInfo(filters) {
             return ;
         }
         
-        LOG("200: " + url + " -> check now");
+        // LOG("200: " + url + " -> check now");
+        
         /* Step through all filters and check if one is valid */
         for (var i=0; i<backendInfo.filters.length; i++) {
             itemFound = false;
@@ -310,13 +321,13 @@ function BackendInfo(filters) {
             if (backendInfo.parentFilter) {
                 // Skip if no parent 
                 if (!(backendInfo.filters[i].parent)) {
-                    LOG("skip filter " + backendInfo.filters[i].name);  
+                    // LOG("skip filter " + backendInfo.filters[i].name);  
                     continue ;
                 }
                 
                 // Skip if different parent 
                 if (backendInfo.filters[i].parent != backendInfo.parentFilter.name) {
-                    LOG("skip filter " + backendInfo.filters[i].name);  
+                    // LOG("skip filter " + backendInfo.filters[i].name);  
                     continue ;
                 }
             }
@@ -332,7 +343,7 @@ function BackendInfo(filters) {
                 */
                 if ((backendInfo.always200) && ((r_strings.length == 0) || ((r_strings.length == 1) && (r_strings[0].length == 0)))) {
                     // Skip this requirement
-                    LOG("always 200 + empty contains --> continue");
+                    // LOG("always 200 + empty contains --> continue");
                     continue ;
                 }                
                  
@@ -355,7 +366,7 @@ function BackendInfo(filters) {
                             // FOUND !!! STOP NOW :-)
                             // This item matches all requirements!!
                             // Stop processing of further incoming requests
-                            LOG("ITEM FOUND: " + backendInfo.filters[i].name);
+                            LOG("ITEM FOUND: " + backendInfo.filters[i].name + " (via " + url + ")");
                             backendInfo.testing = false;
                             backendInfo.foundBase = true;
                             // If child, use parent image?
@@ -419,7 +430,7 @@ function BackendInfo(filters) {
             if (this.filters[i].parent) {
                 if (this.filters[i].parent == filter.name) {
                     // As long as at least 1 filter has this as parent, start a new checkrun!
-                    LOG("Subfilter: " + this.filters[i].name);
+                    LOG("Subfilter found, trying...");
                     this.checkURL(this.check_url, filter);
                     return ;
                 }

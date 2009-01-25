@@ -227,6 +227,79 @@ filters.push({
     });
 
 
+/* === MediaWiki === */
+filters.push({
+    name: "MediaWiki 1.x",
+    image: "chrome://backendinfo/skin/mediawiki.png",
+    require: new Array(
+        { url: '/skins/monobook/main.css', contains: new Array('#column-content') },
+        { url: '/includes/normal/Makefile', contains: new Array('MediaWiki') },
+        { url: '/includes/zhtable/Makefile', contains: new Array('MediaWiki') },
+        { url: '/maintenance/database.sql', contains: new Array('{$wgDBname}') },
+        { url: '/', contains: new Array('common/shared.css', 'monobook/main.css', 'monobook/IE50Fixes.css', 'MediaWiki') },
+        { url: '/RELEASE-NOTES', contains: new Array('MediaWiki release notes') }
+    )
+});
+
+/* === MediaWiki Details === */
+    filters.push({
+        name: "MediaWiki 1.9",
+        parent: "MediaWiki 1.x",
+        require: new Array(
+            { url: '/RELEASE-NOTES', contains: new Array('== MediaWiki 1.9') }
+        )
+    });
+    filters.push({
+        name: "MediaWiki 1.8",
+        parent: "MediaWiki 1.x",
+        require: new Array(
+            { url: '/RELEASE-NOTES', contains: new Array('== MediaWiki 1.8') }
+        )
+    });
+    filters.push({
+        name: "MediaWiki 1.7",
+        parent: "MediaWiki 1.x",
+        require: new Array(
+            { url: '/RELEASE-NOTES', contains: new Array('== MediaWiki 1.7') }
+        )
+    });
+    filters.push({
+        name: "MediaWiki 1.6",
+        parent: "MediaWiki 1.x",
+        require: new Array(
+            { url: '/RELEASE-NOTES', contains: new Array('== MediaWiki 1.6') }
+        )
+    });
+    filters.push({
+        name: "MediaWiki 1.13",
+        parent: "MediaWiki 1.x",
+        require: new Array(
+            { url: '/RELEASE-NOTES', contains: new Array('== MediaWiki 1.13') }
+        )
+    });
+    filters.push({
+        name: "MediaWiki 1.12",
+        parent: "MediaWiki 1.x",
+        require: new Array(
+            { url: '/RELEASE-NOTES', contains: new Array('== MediaWiki 1.12') }
+        )
+    });
+    filters.push({
+        name: "MediaWiki 1.11",
+        parent: "MediaWiki 1.x",
+        require: new Array(
+            { url: '/RELEASE-NOTES', contains: new Array('== MediaWiki 1.11') }
+        )
+    });
+    filters.push({
+        name: "MediaWiki 1.10",
+        parent: "MediaWiki 1.x",
+        require: new Array(
+            { url: '/RELEASE-NOTES', contains: new Array('== MediaWiki 1.10') }
+        )
+    });
+
+
 /* === Mixed Backends === */
 filters.push({
     name: "Typo3",
