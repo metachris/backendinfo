@@ -311,7 +311,7 @@ function BackendInfo(filters) {
             return ;
         }
         
-        // LOG("200: " + url + " -> check now");
+        // LOG("200: " + url + " -> check now -- HTML: " + html);
         
         /* Step through all filters and check if one is valid */
         for (var i=0; i<backendInfo.filters.length; i++) {
