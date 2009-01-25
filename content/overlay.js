@@ -6,7 +6,7 @@ function LOG(msg) {
 var backendInfo;
 
 var IMAGE_INFO = "chrome://backendinfo/skin/information.png";
-var IMAGE_MAIN = "chrome://backendinfo/skin/zoom.png";
+var IMAGE_MAIN = "chrome://backendinfo/skin/magnifier.png";
 var IMAGE_WAIT = "chrome://backendinfo/skin/load1.gif";
 var IMAGE_ERROR = "chrome://backendinfo/skin/error.png";
 var IMAGE_COG = "chrome://backendinfo/skin/cog.png";

@@ -7,7 +7,7 @@
     <em:iconURL>chrome://backendinfo/skin/zoom2.png</em:iconURL>
     <em:version>1.2.2</em:version>
     <em:creator>Chris Hager</em:creator>
-    <em:description>Detect the backend software running the current site (eg. Drupal 6.x, Wordpress 2.7, ...)</em:description>
+    <em:description>Detect the backend software behind the current site (eg. Drupal 6, Wordpress 2.7, phpBB, MediaWiki, ...)</em:description>
     <em:homepageURL>http://www.backendinfo.com</em:homepageURL>
     <em:optionsURL>chrome://backendinfo/content/options.xul</em:optionsURL>
     <em:targetApplication>
