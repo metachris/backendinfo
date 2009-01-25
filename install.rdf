@@ -5,7 +5,7 @@
     <em:id>backendinfo@chris.hager</em:id>
     <em:name>Backend Software Information</em:name>
     <em:iconURL>chrome://backendinfo/skin/zoom2.png</em:iconURL>
-    <em:version>1.2.1</em:version>
+    <em:version>1.2.2</em:version>
     <em:creator>Chris Hager</em:creator>
     <em:description>Detect the backend software running the current site (eg. Drupal 6.x, Wordpress 2.7, ...)</em:description>
     <em:homepageURL>http://www.backendinfo.com</em:homepageURL>
