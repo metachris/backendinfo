@@ -28,6 +28,7 @@ function BackendInfo(filters) {
     this.base_url = "";     // eg. http://linuxuser.at
     this.node_url = "";     // eg. http://linuxuser.at/blog
     this.check_url = "";    // either base_url or node_url, depending on type of check
+    this.test_url = "/iaPqwe79xy9clAKSDWWWA2aaweee2qq4adsdc"; // URL to test if any URL will return status code 200 (no 404) 
     
     this.testing = false;   // true while filters are being tested
     this.foundBase = false; // true if a basic filter is found, while checking the children filters
@@ -37,6 +38,7 @@ function BackendInfo(filters) {
     /* Status for a check-run over all filters */
     this.requests = 0;
     this.prefs = false;
+    this.always200 = false;   // Some websites return 404 for any url (even test_url). keep track of that behavious
     
     /* On Load -- Initialization */
     this.load = function() {
@@ -62,7 +64,7 @@ function BackendInfo(filters) {
     
     this.clickStatusIcon = function() {
         if (this.instantCheck) {
-            this.checkURL(this.node_url);
+            this.checkURL(this.node_url, false, true);
         }
     }
     
@@ -106,7 +108,7 @@ function BackendInfo(filters) {
             this.showResult(this.results[this.node_url]);
         } else {
             if (this.prefs.getBoolPref("boolpref")) {
-                this.checkURL(this.node_url);
+                this.checkURL(this.node_url, false, true);
                 return ;
             } else {
                 // Reset Statusbar to Main    
@@ -143,21 +145,26 @@ function BackendInfo(filters) {
     /* Click on a detect popup entry */
     this.clickCheck = function(i) {    
         if (i == 2) {
-            this.checkURL(this.node_url);
+            this.checkURL(this.node_url, false, true);
         } else {
-            this.checkURL(this.base_url);
+            this.checkURL(this.base_url, false, true);
         }
     }
         
     /* Check a given URL (using either (1) all basic filters, or (2) all filters with a given parentFilter) */
-    this.checkURL = function(url, parentFilter) {
+    this.checkURL = function(url, parentFilter, preSearchTest) {
+        /*
+            If ParentFilter !== false, only children filters of this one will be tested. 
+            preSearchtest: if true, only the test for random URLs (always 200) will be performed
+        */
         if (url.indexOf("//") == -1) {
             return ;
         }
         
-        LOG("checkURL: " + url + " parent: " + parentFilter);
+        LOG("checkURL: " + url + " parent: " + parentFilter + " preSearchTest: " + preSearchTest);
         this.check_url = url;
-
+        this.parentFilter = parentFilter;
+        
         // Cache check        
         // Only if it's not an in depth search!
         if (!(parentFilter)) { 
@@ -177,6 +184,11 @@ function BackendInfo(filters) {
         }
 
         this.testing = true;
+        if (preSearchTest) {
+            // Only check the test URL (always 200?)
+            this.cacheURL(url + this.test_url, this.preSearchComplete);
+            return ;
+        }
         
         /* Cache filter url's */
         for (var i=0; i<this.filters.length; i++) {
@@ -233,7 +245,7 @@ function BackendInfo(filters) {
         httpRequest.open("GET", url, true);
         httpRequest.onreadystatechange = function() {
             if (httpRequest.readyState == 4) {
-                // LOG("statusCode: " + httpRequest.status);
+//                LOG("statusCode: " + httpRequest.status);
                 if (httpRequest.status == 200) {
                     // Site Found
                     backendInfo.cache[url] = httpRequest.responseText;
@@ -250,6 +262,19 @@ function BackendInfo(filters) {
         httpRequest.send(null);
     }
     
+    this.preSearchComplete = function(url, html) {
+        backendInfo.requests -= 1;
+        //LOG("Pre Search Complete: " + url + " .. HTML: " + html);
+        if (html == 404) {
+            backendInfo.always200 = false;
+        } else {
+            backendInfo.always200 = true;
+        }
+        // Start normal tests
+        LOG("preSearchComplete: always200 = " + backendInfo.always200);
+        backendInfo.checkURL(backendInfo.check_url, false);
+    
+    }
     /* Caching of an URL complete: Check all filters with this url
        ! Called from outside, so has no access to this. -- use backendInfo. instead ! 
     */
@@ -261,7 +286,7 @@ function BackendInfo(filters) {
         if (!(backendInfo.testing)) { return ; }
         
         if (html == 404) {
-            LOG("Caching Complete Of: " + url + " >- 404 -- Not Found -- No Checks Performed");
+            LOG("404: " + url + " -> skip");
             if ((backendInfo.requests == 0) && (backendInfo.testing)) {
                 // LOG("foundBase: " + backendInfo.foundBase);
                 backendInfo.testing = false;
@@ -276,10 +301,25 @@ function BackendInfo(filters) {
             return ;
         }
         
-        LOG("Caching Complete Of: " + url + "-> Check Filter Now...");
+        LOG("200: " + url + " -> check now");
         /* Step through all filters and check if one is valid */
         for (var i=0; i<backendInfo.filters.length; i++) {
             itemFound = false;
+
+            /* IF backendInfo.parentFilter is set, only check filters that are this filter's child! */
+            if (backendInfo.parentFilter) {
+                // Skip if no parent 
+                if (!(backendInfo.filters[i].parent)) {
+                    LOG("skip filter " + backendInfo.filters[i].name);  
+                    continue ;
+                }
+                
+                // Skip if different parent 
+                if (backendInfo.filters[i].parent != backendInfo.parentFilter.name) {
+                    LOG("skip filter " + backendInfo.filters[i].name);  
+                    continue ;
+                }
+            }
             
             /* For each filters, check require_anyof */
             for (var j=0; j<backendInfo.filters[i].require.length; j++) {
@@ -287,6 +327,15 @@ function BackendInfo(filters) {
                 r_url = backendInfo.filters[i].require[j].url;
                 r_strings = backendInfo.filters[i].require[j].contains;
 
+                /* IF ALWAYS200 AND NO R_STRINGS SUPPLIED: SKIP THIS REQUIREMENT-SET !!
+                   Because any URL will be counted as valid. 
+                */
+                if ((backendInfo.always200) && ((r_strings.length == 0) || ((r_strings.length == 1) && (r_strings[0].length == 0)))) {
+                    // Skip this requirement
+                    LOG("always 200 + empty contains --> continue");
+                    continue ;
+                }                
+                 
                 // Check if /user/login is part of http://...../user/login
                 if (url.indexOf(r_url) > -1) {
                     // More specific: Check if /user/login is last part of http://...../user/login
@@ -306,7 +355,7 @@ function BackendInfo(filters) {
                             // FOUND !!! STOP NOW :-)
                             // This item matches all requirements!!
                             // Stop processing of further incoming requests
-                            // LOG("ITEM FOUND");
+                            LOG("ITEM FOUND: " + backendInfo.filters[i].name);
                             backendInfo.testing = false;
                             backendInfo.foundBase = true;
                             // If child, use parent image?
@@ -370,7 +419,7 @@ function BackendInfo(filters) {
             if (this.filters[i].parent) {
                 if (this.filters[i].parent == filter.name) {
                     // As long as at least 1 filter has this as parent, start a new checkrun!
-                    // LOG("Subfilter: " + this.filters[i].name);
+                    LOG("Subfilter: " + this.filters[i].name);
                     this.checkURL(this.check_url, filter);
                     return ;
                 }
