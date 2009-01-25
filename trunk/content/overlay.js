@@ -12,6 +12,7 @@ var IMAGE_ERROR = "chrome://backendinfo/skin/error.png";
 var IMAGE_COG = "chrome://backendinfo/skin/cog.png";
 var IMAGE_ID = "backendinfo_statusbox";
 var IMAGE_TEMP = false; // Parent filter set this for undefined children filter images
+var IMAGE_BLANK = " ";
 
 function changeTab() {
     backendInfo.setURL(content.location);
@@ -35,6 +36,7 @@ function BackendInfo(filters) {
     
     /* Status for a check-run over all filters */
     this.requests = 0;
+    this.prefs = false;
     
     /* On Load -- Initialization */
     this.load = function() {
@@ -48,8 +50,16 @@ function BackendInfo(filters) {
 
         this.appcontent = document.getElementById("appcontent");   // browser
         this.appcontent.addEventListener("DOMContentLoaded", changeTab, false);
+
+        this.prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService);
+        this.prefs = this.prefs.getBranch("extensions.backendinfo.");
     }
 
+    this.changePrefs = function(a) {
+        LOG("Change prefs: " + a);
+        alert(this.prefs.getBoolPref("boolpref"));
+    }
+    
     this.clickStatusIcon = function() {
         if (this.instantCheck) {
             this.checkURL(this.node_url);
@@ -88,17 +98,22 @@ function BackendInfo(filters) {
         
         LOG("new valid URL: " + url);
         this.extractURL(url);
-        
+                
         // Check if already tested
         if (this.results[this.node_url]) {
             // LOG("found: " + this.results[this.node_url].image);
             // Set statusbar to results
             this.showResult(this.results[this.node_url]);
         } else {
-            // Reset Statusbar to Main    
-            // LOG("not found -- using: " + IMAGE_MAIN);
-            this.setStatusImage(IMAGE_MAIN);
-            document.getElementById("backendinfo_statusbox").tooltipText = "Detect backend software";        
+            if (this.prefs.getBoolPref("boolpref")) {
+                this.checkURL(this.node_url);
+                return ;
+            } else {
+                // Reset Statusbar to Main    
+                // LOG("not found -- using: " + IMAGE_MAIN);
+                this.setStatusImage(IMAGE_MAIN);
+                document.getElementById("backendinfo_statusbox").tooltipText = "Detect backend software";
+            }        
         }
     }
     
@@ -126,7 +141,7 @@ function BackendInfo(filters) {
     }
 
     /* Click on a detect popup entry */
-    this.clickCheck = function(i) {
+    this.clickCheck = function(i) {    
         if (i == 2) {
             this.checkURL(this.node_url);
         } else {
@@ -140,7 +155,7 @@ function BackendInfo(filters) {
             return ;
         }
         
-        // LOG("checkURL: " + url + " parent: " + parentFilter);
+        LOG("checkURL: " + url + " parent: " + parentFilter);
         this.check_url = url;
 
         // Cache check        
@@ -153,7 +168,12 @@ function BackendInfo(filters) {
             }
             IMAGE_TEMP = false;
             this.foundBase = false;
-            this.setStatusImage(IMAGE_WAIT);
+            
+            if (this.prefs.getBoolPref("loadicon")) {
+                this.setStatusImage(IMAGE_WAIT);
+            } else {
+                this.setStatusImage(IMAGE_BLANK);            
+            }
         }
 
         this.testing = true;
