@@ -5,7 +5,9 @@
   <prefpane id="pane1" label="&pane1.title;">
     <preferences>
       <preference id="boolpref1" name="extensions.backendinfo.boolpref" type="bool"/>
+      <preference id="boolLoadIcon1" name="extensions.backendinfo.loadicon" type="bool"/>
     </preferences>
-    <checkbox id="checkboolpref" preference="boolpref1" label="Auto Detect Backends" accesskey="&checkboolpref.accesskey;"/>
+    <checkbox id="checkboolpref2" preference="boolLoadIcon1" label="Show Load Icon" />
+    <checkbox id="checkboolpref" preference="boolpref1" label="Auto Detect Backends" />
   </prefpane>
 </prefwindow>
