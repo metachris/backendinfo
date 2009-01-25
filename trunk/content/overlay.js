@@ -241,7 +241,7 @@ function BackendInfo(filters) {
         if (!(backendInfo.testing)) { return ; }
         
         if (html == 404) {
-            // LOG("Caching Complete Of: " + url + " >- 404 -- Not Found -- No Checks Performed");
+            LOG("Caching Complete Of: " + url + " >- 404 -- Not Found -- No Checks Performed");
             if ((backendInfo.requests == 0) && (backendInfo.testing)) {
                 // LOG("foundBase: " + backendInfo.foundBase);
                 backendInfo.testing = false;
@@ -256,7 +256,7 @@ function BackendInfo(filters) {
             return ;
         }
         
-        // LOG("Caching Complete Of: " + url + "-> Check Filter Now...");
+        LOG("Caching Complete Of: " + url + "-> Check Filter Now...");
         /* Step through all filters and check if one is valid */
         for (var i=0; i<backendInfo.filters.length; i++) {
             itemFound = false;

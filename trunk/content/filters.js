@@ -71,6 +71,160 @@ filters.push({
             { url: '/readme.html', contains: new Array('wp-admin', 'Version 2.1') }
         )
     });
+    
+
+/* === PHPBB === */
+filters.push({
+    name: "phpBB 3.x",
+    image: "chrome://backendinfo/skin/phpbb.png",
+    require: new Array(
+        { url: '/includes/ucp/ucp_profile.php', contains: new Array('') },
+        { url: '/styles/prosilver/style.cfg', contains: new Array('phpBB') }
+//        { url: '/', contains: new Array('Powered by <a href="http://www.phpbb.com/"') },
+    )
+});
+
+/* === phpBB 3 Details === */
+    filters.push({
+        name: "phpBB 3.0.4",
+        parent: "phpBB 3.x",
+        require: new Array(
+            { url: '/styles/subsilver2/style.cfg', contains: new Array('3.0.4') },
+            { url: '/styles/prosilver/style.cfg', contains: new Array('3.0.4') },
+            { url: '/docs/INSTALL.html', contains: new Array('_to_3.0.4') }
+        )
+    });
+    filters.push({
+        name: "phpBB 3.0.3",
+        parent: "phpBB 3.x",
+        require: new Array(
+            { url: '/styles/subsilver2/style.cfg', contains: new Array('3.0.3') },
+            { url: '/styles/prosilver/style.cfg', contains: new Array('3.0.3') },
+            { url: '/docs/INSTALL.html', contains: new Array('_to_3.0.3') }
+        )
+    });
+    filters.push({
+        name: "phpBB 3.0.2",
+        parent: "phpBB 3.x",
+        require: new Array(
+            { url: '/styles/subsilver2/style.cfg', contains: new Array('3.0.2') },
+            { url: '/styles/prosilver/style.cfg', contains: new Array('3.0.2') },
+            { url: '/docs/INSTALL.html', contains: new Array('_to_3.0.2') }
+        )
+    });
+    filters.push({
+        name: "phpBB 3.0.0/3.0.1",
+        parent: "phpBB 3.x",
+        require: new Array(
+            { url: '/styles/subsilver2/style.cfg', contains: new Array('3.0.0') },
+            { url: '/styles/prosilver/style.cfg', contains: new Array('3.0.0') },
+            { url: '/docs/INSTALL.html', contains: new Array('_to_3.0.1') }
+        )
+    });
+
+/* === phpBB 2 === */
+filters.push({
+    name: "phpBB 2.x",
+    image: "chrome://backendinfo/skin/phpbb.png",
+    require: new Array(
+        { url: '/includes/usercp_email.php', contains: new Array('') },
+        { url: '/templates/subSilver/subSilver.cfg', contains: new Array('') }
+//        { url: '/', contains: new Array('Powered by <a href="http://www.phpbb.com/"') },
+    )
+});
+
+/* === phpBB 2 Details === */
+    filters.push({
+        name: "phpBB 2.0.23",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('_to_2.0.23') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.22",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('_to_2.0.22') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.21",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('_to_2.0.21') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.20",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('_to_2.0.20') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.19",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('_to_2.0.19') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.18",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('_to_2.0.18') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.17",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('_to_2.0.17') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.16",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('phpBB 2.0.16') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.15",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('phpBB 2.0.15') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.14",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('phpBB 2.0.14') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.13",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('phpBB 2.0.13') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.12",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('phpBB 2.0.12') }
+        )
+    });
+    filters.push({
+        name: "phpBB 2.0.11",
+        parent: "phpBB 2.x",
+        require: new Array(
+            { url: '/docs/INSTALL.html', contains: new Array('phpBB 2.0.11') }
+        )
+    });
 
 
 /* === Mixed Backends === */
@@ -89,16 +243,3 @@ filters.push({
     )
 });
 
-filters.push({
-    name: "MediaWiki",
-    require: new Array(
-        { url: '/', contains: new Array('/w/index.php?title=MediaWiki:') }
-    )
-});
-
-filters.push({
-    name: "Apache File Browser",
-    require: new Array(
-        { url: '/', contains: new Array('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">', '<title>Index of', '<table><tr><th><img src="/icons/') }
-    )
-});
