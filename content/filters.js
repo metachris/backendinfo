@@ -6,7 +6,7 @@ filters.push({
     image: "chrome://backendinfo/skin/wordpress.png",
     require: new Array(
         { url: '/', contains: new Array('wp-content/themes', 'xmlrpc.php') },
-        { url: '/wp-admin', contains: new Array('wp-admin') }
+        { url: '/wp-admin', contains: new Array('wp-admin/css') }
     )
 });
 
