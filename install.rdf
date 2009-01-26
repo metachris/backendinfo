@@ -3,15 +3,15 @@
          xmlns:NC="http://home.netscape.com/NC-rdf#"
          xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <RDF:Description RDF:about="urn:mozilla:install-manifest"
-                   em:id="backendinfo@chris.hager"
+                   em:id="backendinfo@linuxuser.at"
                    em:name="Backend Software Information"
                    em:iconURL="chrome://backendinfo/skin/zoom2.png"
-                   em:version="1.2.3"
+                   em:version="1.2.5"
                    em:creator="Chris Hager"
                    em:description="Detect the backend software behind the current site (eg. Drupal 6, Wordpress 2.7, phpBB, MediaWiki, ...)"
                    em:homepageURL="http://www.backendinfo.com"
                    em:optionsURL="chrome://backendinfo/content/options.xul"
-                   em:updateURL="http://backendinfo.com/release/update.rdf"
+                   em:updateURL="http://www.backendinfo.com/release/update.rdf"
                    em:updateKey="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMTQV7JfITyeXWUHMbXHcsP50JI7U0e4RmBwD2nGw5BTs2XToySBXPvQYNV0X1/2yv8GOtIN7X8z8P/Vqt6Fxhesx5jbTXd0KKR0KTUFbpdQdN/HujJrsGrOuDiLu29vxxzsAJy3ntkz/fNRJk7gbq5mMaDBH7WP7e00LgDeLXCQIDAQAB">
     <em:targetApplication RDF:resource="rdf:#$HqI9C2"/>
   </RDF:Description>
