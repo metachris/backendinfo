@@ -39,6 +39,7 @@ function BackendInfo(filters) {
     this.requests = 0;
     this.prefs = false;
     this.always200 = false;   // Some websites return 404 for any url (even test_url). keep track of that behavious
+    this.changeFromContextMenu = false; // Needed because click on context menu 'show text' triggers the observer
     
     /* On Load -- Initialization */
     this.load = function() {
@@ -46,7 +47,9 @@ function BackendInfo(filters) {
             LOG("no clipmenu");
             this.instantCheck = true;
             this.hasPopup = false;
+            document.getElementById("backendinfo_text").tooltipText = "detected backend";
         }
+
         this.container = gBrowser.tabContainer;
         this.container.addEventListener("TabSelect", changeTab, false);
 
@@ -55,17 +58,46 @@ function BackendInfo(filters) {
 
         this.prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService);
         this.prefs = this.prefs.getBranch("extensions.backendinfo.");
+        this.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
+        this.prefs.addObserver("", this, false);
+
+        document.getElementById("clipmenu4").checked = this.prefs.getBoolPref("statustext");
     }
 
-    this.changePrefs = function(a) {
-        LOG("Change prefs: " + a);
-        alert(this.prefs.getBoolPref("boolpref"));
+    this.observe = function(subject, topic, data) {
+        if (topic == "nsPref:changed") {
+            if (data == "statustext") {
+                // If changed from within the preferences menu, update the menu item!
+                if (!(this.changeFromContextMenu)) {
+                    if (this.hasPopup) {
+                        document.getElementById("clipmenu4").checked = this.prefs.getBoolPref("statustext");
+                    }
+                } else {
+                    this.changeFromContextMenu = false;                
+                }
+                
+                if (this.prefs.getBoolPref("statustext")) {
+                    if (document.getElementById("backendinfo_text").label.length > 0) {
+                        document.getElementById("backendinfo_text").style.display = "block";
+                    }
+                } else {
+                    document.getElementById("backendinfo_text").style.display = "none";
+                }
+            }
+        }
     }
     
-    this.clickStatusIcon = function() {
-        if (this.instantCheck) {
+    this.clickStatusIcon = function(e) {
+        if ((this.instantCheck) || (e.button == 0)) {
             this.checkURL(this.node_url, false, true);
         }
+    }
+
+    this.clickText = function() {
+        t = document.getElementById("clipmenu4").checked;
+        //LOG("click on toggle text context menu " + t);
+        this.changeFromContextMenu = true;        
+        this.prefs.setBoolPref("statustext", !(t));
     }
     
     /* Setting the image in the Statusbar */
@@ -94,6 +126,8 @@ function BackendInfo(filters) {
 
             this.setStatusImage(IMAGE_MAIN);
             document.getElementById("backendinfo_statusbox").tooltipText = "Visit a website first";
+            document.getElementById("backendinfo_text").style.display = "none";
+            document.getElementById("backendinfo_text").label = "";
 
             return;
         }
@@ -106,15 +140,19 @@ function BackendInfo(filters) {
             // LOG("found: " + this.results[this.node_url].image);
             // Set statusbar to results
             this.showResult(this.results[this.node_url]);
+
         } else {
             if (this.prefs.getBoolPref("boolpref")) {
+                document.getElementById("backendinfo_text").style.display = "none";
                 this.checkURL(this.node_url, false, true);
                 return ;
             } else {
                 // Reset Statusbar to Main    
                 // LOG("not found -- using: " + IMAGE_MAIN);
                 this.setStatusImage(IMAGE_MAIN);
-                document.getElementById("backendinfo_statusbox").tooltipText = "Detect backend software";
+                document.getElementById("backendinfo_statusbox").tooltipText = "Detect Backend";
+                document.getElementById("backendinfo_text").style.display = "none";
+                document.getElementById("backendinfo_text").label = "";
             }        
         }
     }
@@ -416,10 +454,21 @@ function BackendInfo(filters) {
             // LOG("IMAGE_TEMP: " + IMAGE_TEMP + "  -- filter.image: " + filter.image);
             this.setStatusImage(filter.image);
             document.getElementById("backendinfo_statusbox").tooltipText = filter.name;
+    
+            document.getElementById("backendinfo_text").label = filter.name;
+            if (this.prefs.getBoolPref("statustext")) {
+                document.getElementById("backendinfo_text").style.display = "block";
+            }
+            
         } else {
             // Finished Check without Valid Results
             this.setStatusImage(IMAGE_ERROR);
             document.getElementById("backendinfo_statusbox").tooltipText = "Backend was not identified";
+
+            if (this.prefs.getBoolPref("statustext")) {
+                document.getElementById("backendinfo_text").style.display = "none";
+            }
+            document.getElementById("backendinfo_text").label = "";
         }
     }
 

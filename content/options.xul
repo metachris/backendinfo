@@ -6,8 +6,10 @@
     <preferences>
       <preference id="boolpref1" name="extensions.backendinfo.boolpref" type="bool"/>
       <preference id="boolLoadIcon1" name="extensions.backendinfo.loadicon" type="bool"/>
+      <preference id="boolStatusText1" name="extensions.backendinfo.statustext" type="bool"/>
     </preferences>
-    <checkbox id="checkboolpref2" preference="boolLoadIcon1" label="Show Load Icon" />
+    <checkbox id="checkboolpref2" preference="boolLoadIcon1" label="Show Load-Icon" />
     <checkbox id="checkboolpref" preference="boolpref1" label="Auto Detect Backends" />
+    <checkbox id="checkboolpref3" preference="boolStatusText1" label="Show Text in Statusbar" />
   </prefpane>
 </prefwindow>

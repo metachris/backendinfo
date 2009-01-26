@@ -15,7 +15,8 @@ filters.push({
         parent: "Drupal",
         require: new Array(
             { url: '/',  contains: new Array('modules/system/system.css?', 'modules/node/node.css?', 'modules/user/user.css?') },
-            { url: '/update.php',  contains: new Array('http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd', 'Drupal database update') }            
+            { url: '/update.php',  contains: new Array('http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd', 'Drupal database update') },
+            { url: '/update.php',  contains: new Array('http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd', 'Access denied') }            
         )
     });
     /* === Drupal 6.x Conditional Filters === */

@@ -16,27 +16,27 @@
     <menuitem id="clipmenu1" label="" onclick="backendInfo.clickCheck(1)" tooltiptext="Detect backend software of this site" />
     <menuitem id="clipmenu2" label="" onclick="backendInfo.clickCheck(2)" tooltiptext="Detect backend software of this site" />
     <menuitem id="clipmenu3" label="custom url" onclick="backendInfo.clickCheck(3)" tooltiptext="Detect backend software of this site" />
-<!--    <checkbox id="clipmenuAuto" label="Auto Detect" checked="false" /> -->
+    <checkbox id="clipmenu4" label="show text" checked="true" onclick="backendInfo.clickText()" />
   </menupopup>
 </popupset>
 
 <statusbar id="status-bar">
 	<statusbarpanel id="backendinfo_status"
 		label=""
-        onclick="backendInfo.clickStatusIcon()"
+        onclick="backendInfo.clickStatusIcon(event)"
         tooltiptext="">
         <box id="backendinfo_statusbox"
             title=""
             width="16"
             height="16"
             context="clipmenu"
-            popup="clipmenu"
-            tooltiptext="Detect backend software"
+            tooltiptext="Detect Backend"
             />
-<!--        <progressmeter
-            id="backendinfo_progress"
-            mode="determined"
-            value="50"/>
--->    </statusbarpanel>        
+    </statusbarpanel>        
+	<statusbarpanel id="backendinfo_text"
+	    tooltiptext="Click for more options"
+        popup="clipmenu"
+        context="clipmenu"
+		label="" />
 </statusbar>
 </overlay>
