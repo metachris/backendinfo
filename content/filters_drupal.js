@@ -5,14 +5,17 @@ filters.push({
     require: new Array(
         { url: '/sites/all/README.txt', contains: new Array('sites/all/modules', 'sites/all/themes') },
         { url: '/',  contains: new Array('modules/system/system.css?', 'modules/node/node.css?', 'modules/user/user.css?') },
-        { url: '/',  contains: new Array('modules/system/system.css";</style>', 'modules/node/node.css";</style>', 'modules/user/user.css";</style>') }
+        { url: '/',  contains: new Array('modules/system/system.css";</style>', 'modules/node/node.css";</style>', 'modules/user/user.css";</style>') },
+        { url: '/update.php',  contains: new Array('Drupal database update') },
+        { url: '/update.php',  contains: new Array('Access denied', 'main Drupal directory', '$access_check = ') }
     )
 });
     filters.push({
         name: "Drupal 6.x",
         parent: "Drupal",
         require: new Array(
-            { url: '/',  contains: new Array('modules/system/system.css?', 'modules/node/node.css?', 'modules/user/user.css?') }
+            { url: '/',  contains: new Array('modules/system/system.css?', 'modules/node/node.css?', 'modules/user/user.css?') },
+            { url: '/update.php',  contains: new Array('http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd', 'Drupal database update') }            
         )
     });
     /* === Drupal 6.x Conditional Filters === */
@@ -103,7 +106,9 @@ filters.push({
         parent: "Drupal",
         image: "chrome://backendinfo/skin/drupal.png",
         require: new Array(
-            { url: '/',  contains: new Array('modules/system/system.css";</style>', 'modules/node/node.css";</style>', 'modules/user/user.css";</style>') }
+            { url: '/',  contains: new Array('modules/system/system.css";</style>', 'modules/node/node.css";</style>', 'modules/user/user.css";</style>') },
+            { url: '/update.php',  contains: new Array('http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd', 'Drupal database update') },            
+            { url: '/update.php',  contains: new Array('http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd', 'Access denied') }
         )
     });
     
