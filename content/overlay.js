@@ -404,7 +404,7 @@ function BackendInfo(filters) {
                             // FOUND !!! STOP NOW :-)
                             // This item matches all requirements!!
                             // Stop processing of further incoming requests
-                            LOG("ITEM FOUND: " + backendInfo.filters[i].name + " (via " + url + ")");
+                            LOG("ITEM FOUND: " + backendInfo.filters[i].name + " (via '" + url + "'  ++: " + r_strings + ")");
                             backendInfo.testing = false;
                             backendInfo.foundBase = true;
                             // If child, use parent image?
