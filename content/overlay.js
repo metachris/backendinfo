@@ -375,6 +375,7 @@ function BackendInfo(filters) {
                 itemFound = false;
                 r_url = backendInfo.filters[i].require[j].url;
                 r_strings = backendInfo.filters[i].require[j].contains;
+                r_excludes = backendInfo.filters[i].require[j].excludes; // Array of strings NOT to contain
 
                 /* IF ALWAYS200 AND NO R_STRINGS SUPPLIED: SKIP THIS REQUIREMENT-SET !!
                    Because any URL will be counted as valid. 
@@ -394,11 +395,40 @@ function BackendInfo(filters) {
                         if (r_strings) {
                             // Test all strings
                             for (var n=0; n<r_strings.length; n++) {
-                                if (html.indexOf(r_strings[n]) == -1) {
-                                    itemFound = false;
-                                }
-                            }
-                        }
+                                // Check if RegExp or String
+                                if ((typeof r_strings[n]) == "object") {
+                                    // Regular Expression!
+                                    if (!(r_strings[n]).test(html)) {
+                                        itemFound = false;
+                                    }
+                                } else {
+                                    // String Search
+                                    if (html.indexOf(r_strings[n]) == -1) {
+                                        itemFound = false;
+                                    }
+                                } // EOF typeof 
+                            } // EOF for n...
+                        } // EOF if r_strings
+                        
+                        if (r_excludes) {
+                            // Test all excludes!
+                            for (var n=0; n<r_excludes.length; n++) {
+                                LOG("exclude " + r_excludes[n].length + " -- " + typeof r_excludes[n]);
+                                if ((typeof r_excludes[n]) == "object") {
+                                    // Regular Expression to Exclude: Fail if test() == true
+                                    if (r_excludes[n].test(html)) {
+                                        itemFound = false;
+                                    } 
+                                } else {
+                                    if (r_excludes[n].length > 0) {
+                                        // String to exclude
+                                        if (html.indexOf(r_excludes[n]) != -1) {
+                                            itemFound = false;
+                                        }
+                                    } // EOF if r_excludes.length
+                                } // EOF typeof
+                            } // EOF for ...
+                        } /// EOF if r_excludes
                         
                         if (itemFound) {
                             // FOUND !!! STOP NOW :-)

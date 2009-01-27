@@ -8,6 +8,9 @@
   <script src="filters_drupal.js"/>
   <script src="filters_moinmoin.js"/>
   <script src="filters_dokuwiki.js"/>
+<!--
+  <script src="filters_test.js"/>
+-->
 
   <script src="overlay.js"/>
   <stringbundleset id="stringbundleset">
