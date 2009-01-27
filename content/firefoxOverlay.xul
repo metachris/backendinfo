@@ -3,9 +3,12 @@
 <!DOCTYPE overlay SYSTEM "chrome://backendinfo/locale/backendinfo.dtd">
 <overlay id="backendinfo-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
   <script src="filters.js"/>
   <script src="filters_drupal.js"/>
   <script src="filters_moinmoin.js"/>
+  <script src="filters_dokuwiki.js"/>
+
   <script src="overlay.js"/>
   <stringbundleset id="stringbundleset">
     <stringbundle id="backendinfo-strings" src="chrome://backendinfo/locale/backendinfo.properties"/>
