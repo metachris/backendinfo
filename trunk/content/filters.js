@@ -294,7 +294,89 @@ filters.push({
 filters.push({
     name: "Django",
     require: new Array(
-        { url: '/admin', contains: new Array('Django') }
+        { url: '/admin', contains: new Array('Django') },
+        { url: '/admin', contains: new Array('css/login.css', 'label for="id_password">', 'this_is_the_login_form') }
     )
 });
 
+    filters.push({
+        name: "Django 0.90",
+        parent: "Django",
+        require: new Array(
+            { url: '/media/admin/css/global.css', contains: new Array('text-align:left; min-height:55px; _height:55px;') },
+            { url: '/admin_media/css/global.css', contains: new Array('text-align:left; min-height:55px; _height:55px;') },
+            { url: '/admin-media/css/global.css', contains: new Array('text-align:left; min-height:55px; _height:55px;') },
+            { url: '/admin/media/css/global.css', contains: new Array('text-align:left; min-height:55px; _height:55px;') },
+            { url: '/media_admin/css/global.css', contains: new Array('text-align:left; min-height:55px; _height:55px;') },
+            { url: '/media/css/global.css', contains: new Array('text-align:left; min-height:55px; _height:55px;') }
+        )
+    });
+    filters.push({
+        name: "Django 0.91.3",
+        parent: "Django",
+        require: new Array(
+            { url: '/media/admin/css/global.css', contains: new Array('#header { width:100%; }', 'Copyright (c) 2005 Lawrence Journal-World') },
+            { url: '/admin_media/css/global.css', contains: new Array('#header { width:100%; }', 'Copyright (c) 2005 Lawrence Journal-World') },
+            { url: '/admin-media/css/global.css', contains: new Array('#header { width:100%; }', 'Copyright (c) 2005 Lawrence Journal-World') },
+            { url: '/admin/media/css/global.css', contains: new Array('#header { width:100%; }', 'Copyright (c) 2005 Lawrence Journal-World') },
+            { url: '/media_admin/css/global.css', contains: new Array('#header { width:100%; }', 'Copyright (c) 2005 Lawrence Journal-World') },
+            { url: '/media/css/global.css', contains: new Array('#header { width:100%; }', 'Copyright (c) 2005 Lawrence Journal-World') }
+        )
+    });
+    filters.push({
+        name: "Django 0.95.4",
+        parent: "Django",
+        require: new Array(
+            { url: '/media/admin/css/global.css', contains: new Array('"Lucida Grande","Bitstream Vera Sans",Verdana,Arial,sans-serif;', 'body { margin:0; padding:0; font-size:12px; font-family:') },
+            { url: '/admin_media/css/global.css', contains: new Array('"Lucida Grande","Bitstream Vera Sans",Verdana,Arial,sans-serif;', 'body { margin:0; padding:0; font-size:12px; font-family:') },
+            { url: '/admin-media/css/global.css', contains: new Array('"Lucida Grande","Bitstream Vera Sans",Verdana,Arial,sans-serif;', 'body { margin:0; padding:0; font-size:12px; font-family:') },
+            { url: '/admin/media/css/global.css', contains: new Array('"Lucida Grande","Bitstream Vera Sans",Verdana,Arial,sans-serif;', 'body { margin:0; padding:0; font-size:12px; font-family:') },
+            { url: '/media_admin/css/global.css', contains: new Array('"Lucida Grande","Bitstream Vera Sans",Verdana,Arial,sans-serif;', 'body { margin:0; padding:0; font-size:12px; font-family:') },
+            { url: '/media/css/global.css', contains: new Array('"Lucida Grande","Bitstream Vera Sans",Verdana,Arial,sans-serif;', 'body { margin:0; padding:0; font-size:12px; font-family:') }
+        )
+    });
+    filters.push({
+        name: "Django 0.96.3",
+        parent: "Django",
+        require: new Array(
+            { url: '/media/admin/css/global.css', contains: new Array('"Lucida Grande","DejaVu Sans","Bitstream Vera Sans"', '.module h2, .module caption { margin') },
+            { url: '/admin_media/css/global.css', contains: new Array('"Lucida Grande","DejaVu Sans","Bitstream Vera Sans"', '.module h2, .module caption { margin') },
+            { url: '/admin-media/css/global.css', contains: new Array('"Lucida Grande","DejaVu Sans","Bitstream Vera Sans"', '.module h2, .module caption { margin') },
+            { url: '/admin/media/css/global.css', contains: new Array('"Lucida Grande","DejaVu Sans","Bitstream Vera Sans"', '.module h2, .module caption { margin') },
+            { url: '/media_admin/css/global.css', contains: new Array('"Lucida Grande","DejaVu Sans","Bitstream Vera Sans"', '.module h2, .module caption { margin') },
+            { url: '/media/css/global.css', contains: new Array('"Lucida Grande","DejaVu Sans","Bitstream Vera Sans"', '.module h2, .module caption { margin') }
+        )
+    });
+    filters.push({
+        name: "Django 1.0",
+        parent: "Django",
+        require: new Array(
+            { url: '/media/admin/css/global.css', contains: new Array('a.section:link, a.section:visited', "\ninput[type=submit].default:active { background-image") },
+            { url: '/admin_media/css/global.css', contains: new Array('a.section:link, a.section:visited', "\ninput[type=submit].default:active { background-image") },
+            { url: '/admin-media/css/global.css', contains: new Array('a.section:link, a.section:visited', "\ninput[type=submit].default:active { background-image") },
+            { url: '/admin/media/css/global.css', contains: new Array('a.section:link, a.section:visited', "\ninput[type=submit].default:active { background-image") },
+            { url: '/media_admin/css/global.css', contains: new Array('a.section:link, a.section:visited', "\ninput[type=submit].default:active { background-image") },
+            { url: '/media/css/global.css', contains: new Array('a.section:link, a.section:visited', "\ninput[type=submit].default:active { background-image") }
+        )
+    });
+    filters.push({
+        name: "Django 1.0.2",
+        parent: "Django",
+        require: new Array(
+            { url: '/media/admin/css/global.css', contains: new Array('a.section:link, a.section:visited', '.button.default, input[type=submit') },
+            { url: '/admin_media/css/global.css', contains: new Array('a.section:link, a.section:visited', '.button.default, input[type=submit') },
+            { url: '/admin-media/css/global.css', contains: new Array('a.section:link, a.section:visited', '.button.default, input[type=submit') },
+            { url: '/admin/media/css/global.css', contains: new Array('a.section:link, a.section:visited', '.button.default, input[type=submit') },
+            { url: '/media_admin/css/global.css', contains: new Array('a.section:link, a.section:visited', '.button.default, input[type=submit') },
+            { url: '/media/css/global.css', contains: new Array('a.section:link, a.section:visited', '.button.default, input[type=submit') }
+        )
+    });
+
+/*
+            { url: '/media/admin/css/login.css', contains: new Array('') }.
+            { url: '/admin_media/css/login.css', contains: new Array('') }.
+            { url: '/admin-media/css/login.css', contains: new Array('') }.
+            { url: '/admin/media/css/login.css', contains: new Array('') }.
+            { url: '/media_admin/css/login.css', contains: new Array('') }.
+            { url: '/media/css/login.css', contains: new Array('') }.
+*/
