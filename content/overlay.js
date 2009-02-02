@@ -380,7 +380,7 @@ function BackendInfo(filters) {
                 /* IF ALWAYS200 AND NO R_STRINGS SUPPLIED: SKIP THIS REQUIREMENT-SET !!
                    Because any URL will be counted as valid. 
                 */
-                if ((backendInfo.always200) && ((r_strings.length == 0) || ((r_strings.length == 1) && (r_strings[0].length == 0)))) {
+                if ((backendInfo.always200) && ((r_strings) && ((r_strings.length == 0) || ((r_strings.length == 1) && (r_strings[0].length == 0))))) {
                     // Skip this requirement
                     // LOG("always 200 + empty contains --> continue");
                     continue ;
