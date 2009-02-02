@@ -2,7 +2,7 @@
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <!DOCTYPE prefwindow SYSTEM "chrome://backendinfo/locale/prefwindow.dtd">
 <prefwindow id="backendinfoPreferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&prefwindow.title;">
-  <prefpane id="pane1" label="&pane1.title;">
+  <prefpane id="pane1" label="Settings">
     <preferences>
       <preference id="boolpref1" name="extensions.backendinfo.boolpref" type="bool"/>
       <preference id="boolLoadIcon1" name="extensions.backendinfo.loadicon" type="bool"/>
