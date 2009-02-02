@@ -9,16 +9,10 @@
   <script src="filters_moinmoin.js"/>
   <script src="filters_dokuwiki.js"/>
   <script src="filters_joomla.js"/>
-<!--
-  <script src="filters_test.js"/>
--->
-
   <script src="overlay.js"/>
   <stringbundleset id="stringbundleset">
     <stringbundle id="backendinfo-strings" src="chrome://backendinfo/locale/backendinfo.properties"/>
   </stringbundleset>
-
-<!-- Firefox -->
 <popupset>
   <menupopup id="clipmenu">
     <menuitem id="clipmenu1" label="" onclick="backendInfo.clickCheck(1)" tooltiptext="Detect backend software of this site" />
@@ -27,7 +21,6 @@
     <checkbox id="clipmenu4" label="show text" checked="true" onclick="backendInfo.clickText()" />
   </menupopup>
 </popupset>
-
 <statusbar id="status-bar">
 	<statusbarpanel id="backendinfo_status"
 		label=""
