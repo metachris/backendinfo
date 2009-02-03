@@ -377,7 +377,19 @@ filters.push({
     name: "Blogger",
     image: "chrome://backendinfo/skin/blogger.png",
     require: new Array(
+        { url: '/', contains: new Array('<meta name="generator" content="Blogger"') },
         { url: '/', contains: new Array("<meta content='blogger' name='generator'/>") },
         { url: '/', contains: new Array('<meta content="blogger" name="generator"/>') }
+    )
+});
+
+filters.push({
+    name: "Reddit",
+    image: "chrome://backendinfo/skin/reddit.png",
+    require: new Array(
+        { url: '/', contains: new Array('"/static/reddit.css', '"/static/reddit.js') },
+        { url: '/', contains: new Array('<script src="/static/reddit_piece.js"', 'href="/static/reddit.css') }
+//        { url: '/', contains: new Array('<meta name="keywords" content=" reddit, reddit.com, vote, comment, submit " />') },
+        
     )
 });
