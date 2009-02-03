@@ -293,6 +293,7 @@ filters.push({
 
 filters.push({
     name: "Django",
+    image: "chrome://backendinfo/skin/django.png",
     require: new Array(
         { url: '/admin', contains: new Array('Django') },
         { url: '/admin', contains: new Array('css/login.css', 'label for="id_password">', 'this_is_the_login_form') }
@@ -372,11 +373,11 @@ filters.push({
         )
     });
 
-/*
-            { url: '/media/admin/css/login.css', contains: new Array('') }.
-            { url: '/admin_media/css/login.css', contains: new Array('') }.
-            { url: '/admin-media/css/login.css', contains: new Array('') }.
-            { url: '/admin/media/css/login.css', contains: new Array('') }.
-            { url: '/media_admin/css/login.css', contains: new Array('') }.
-            { url: '/media/css/login.css', contains: new Array('') }.
-*/
+filters.push({
+    name: "Blogger",
+    image: "chrome://backendinfo/skin/blogger.png",
+    require: new Array(
+        { url: '/', contains: new Array("<meta content='blogger' name='generator'/>") },
+        { url: '/', contains: new Array('<meta content="blogger" name="generator"/>') }
+    )
+});
