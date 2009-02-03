@@ -6,7 +6,7 @@
                    em:id="backendinfo@linuxuser.at"
                    em:name="Backend Software Information"
                    em:iconURL="chrome://backendinfo/skin/zoom2.png"
-                   em:version="1.2.6.5"
+                   em:version="1.2.6.6"
                    em:creator="Chris Hager"
                    em:description="Detect the backend software behind the current site (eg. Drupal 6.x, 5.x, Wordpress 2.7, phpBB, MediaWiki, Django, ...)"
                    em:homepageURL="http://www.backendinfo.com"
