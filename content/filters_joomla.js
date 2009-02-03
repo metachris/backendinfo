@@ -1,9 +1,15 @@
+/* TODO: Check toolbar.css */
 filters.push({
     name: "Joomla",
     image: "chrome://backendinfo/skin/joomla.png",
     require: new Array(
         { url: '/', contains: new Array(/[<]meta name[=]["]Generator["]( |\t)content[=]["]Joomla[!]/i) }, // "        
-        { url: '/htaccess.txt', contains: new Array('@package Joomla', 'Joomla! is Free Software') }
+        { url: '/htaccess.txt', contains: new Array('@package Joomla', 'Joomla! is Free Software') },
+        /* 1.5.x only: */
+        { url: '/templates/system/css/toolbar.css', contains: new Array('@package Joomla') },
+        /* 1.0.x only: */
+        { url: '/templates/css/offline.css', contains: new Array('@package Joomla') },
+        { url: '/mambots/index.html', contains: new Array('<html><body bgcolor="#FFFFFF"></body></html>') }
     )
 });
     /* 1.5.x */
@@ -14,8 +20,8 @@ filters.push({
             { url: '/', contains: new Array(/[<]meta name[=]["]generator["]( |\t)content[=]["]Joomla[!]/) }, // "        
             { url: '/', contains: new Array('<meta name="generator" content="Joomla! 1.5') },
             { url: '/htaccess.txt', contains: new Array('@copyright Copyright (C) 2005 - 2008 Open Source Matters') },
+            { url: '/templates/system/css/toolbar.css', contains: new Array('@package Joomla') },
             { url: '/libraries/tcpdf/README.TXT', contains: new Array('TCPDF') } // With 1.5.0
-            //{ url: '/language/en-GB/en-GB.xml', contains: new Array('<version>1.5') }                    
         )
     });
         filters.push({
@@ -153,7 +159,9 @@ filters.push({
         require: new Array(
             { url: '/', contains: new Array(/[<]meta name[=]["]Generator["]( |\t)content[=]["]Joomla[!]/) }, // "
             { url: '/', contains: new Array('<meta name="Generator" content="Joomla! - Copyright') },
-            { url: '/htaccess.txt', contains: new Array('@copyright Copyright (C) 2005 Open Source Matters') }
+            { url: '/htaccess.txt', contains: new Array('@copyright Copyright (C) 2005 Open Source Matters') },
+            { url: '/templates/css/offline.css', contains: new Array('@package Joomla') },
+            { url: '/mambots/index.html', contains: new Array('<html><body bgcolor="#FFFFFF"></body></html>') }
         )
     });    
 
