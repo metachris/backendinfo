@@ -9,8 +9,10 @@
     onload="onLoad();"
     style="width:450px;">
 
+    <script src="backendinfo.js"/>
     <script src="devstatus.js"/>
-    <dialogheader title="Costom Filter Test" description="Running" />
+    
+    <dialogheader title="Costom Filter Test" description="" />
 
     <groupbox>
         <grid>
@@ -18,7 +20,7 @@
             <rows>
                 <row><label value="Base URL:" /><label value="" id="backendstatus_url" /></row>
                 <row><label value="Filters:" /><label value="" id="backendstatus_filtercount" /></row>
-                <row><label value="Status:" /><label value="-" id="backendstatus_status" /></row>
+                <row><label value="Status:" /><label value="" style="font-weight:bold;" id="backendstatus_status" /></row>
             </rows>
         </grid>
         <textbox multiline="true" rows="10" id="backendstatus_log" readonly="true" style="font-family:monospace" />
