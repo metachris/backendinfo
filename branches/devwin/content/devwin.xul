@@ -6,6 +6,7 @@
     ondialogcancel=""
     ondialogaccept="return false;"
     ondialoghelp="alert('help');"
+    onload="onLoad();"
     style="width:650px;">
     <script src="devwin.js"/>
     <dialogheader title="Developer Toolbox" description="Filter Test" />
@@ -16,10 +17,30 @@
         <label value="2. Copy your filter code in the textbox" />
         <label value="3. Click on apply" />
     </groupbox>
-    
+
+    <menupopup id="backenddev_recent">
+        <menuitem id="backenddev_recent0" label="" style="display:block;" oncommand="setRecent(0);" />
+        <menuitem id="backenddev_recent1" label="" style="display:none;" oncommand="setRecent(1);" />
+        <menuitem id="backenddev_recent2" label="" style="display:none;" oncommand="setRecent(2);" />
+        <menuitem id="backenddev_recent3" label="" style="display:none;" oncommand="setRecent(3);" />
+        <menuitem id="backenddev_recent4" label="" style="display:none;" oncommand="setRecent(4);" />
+   </menupopup>
+
     <groupbox>
-        <caption label="Test Website URL" />
-         <textbox value="http://" id="backenddev_url" />
+        <caption label="Base URL" />
+        <grid>
+            <columns>
+                <column flex="1" />
+                <column />
+            </columns>
+            <rows>
+                <row>
+                    <textbox value="http://" id="backenddev_url" type="autocomplete" autocompletesearch="history" tooltiptext="Here you can search your history or enter any URL" />
+                    <button label="Recent" popup="backenddev_recent" tooltiptext="Click here to see your recently checked URLs" />
+                </row>
+            </rows>
+        </grid>
+         
     </groupbox>
     
     <groupbox>
