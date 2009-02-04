@@ -7,12 +7,12 @@
     ondialogaccept="return false;"
     ondialogok="window.close();"
     onload="onLoad();"
-    style="width:450px;">
+    style="width:550px;">
 
     <script src="backendinfo.js"/>
     <script src="devstatus.js"/>
     
-    <dialogheader title="Costom Filter Test" description="" />
+    <dialogheader title="Custom Filter Test" description="" />
 
     <groupbox>
         <grid>

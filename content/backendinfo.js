@@ -244,7 +244,7 @@ function BackendInfo(filters, devmode) {
         }
 
         this.testing = true;
-        if (preSearchTest) {
+        if ((preSearchTest) && (!(this.devmode))) {
             // Only check the test URL (always 200?)
             this.cacheURL(url + this.test_url, this.preSearchComplete);
             return ;
@@ -258,6 +258,7 @@ function BackendInfo(filters, devmode) {
                     if (this.filters[i]["parent"]) {
                         if (this.filters[i]["parent"] == parentFilter.name) {
                             // LOG("testing child filter: " + this.filters[i].name);
+                            if (this.devmode) { this.devmode('Testing Filter: ' + this.filters[i].name + "\n"); } 
                             for (var j=0; j<this.filters[i].require.length; j++) {
                                 this.cacheURL(url + this.filters[i].require[j].url, this.cachingComplete);                    
                             }                            
@@ -267,6 +268,7 @@ function BackendInfo(filters, devmode) {
                     // Only use filters without parents now
                     if (!(this.filters[i]["parent"])) {
                         // LOG("testing filter: " + this.filters[i].name);
+                        if (this.devmode) { this.devmode('Testing Filter: ' + this.filters[i].name + "\n"); } 
                         for (var j=0; j<this.filters[i].require.length; j++) {
                             this.cacheURL(url + this.filters[i].require[j].url, this.cachingComplete);                    
                         }
@@ -459,6 +461,8 @@ function BackendInfo(filters, devmode) {
                             // This item matches all requirements!!
                             // Stop processing of further incoming requests
                             LOG("ITEM FOUND: " + backendInfo.filters[i].name + " (via '" + url + "'  ++: " + r_strings + ")");
+                            if (backendInfo.devmode) { backendInfo.devmode("\n=> FILTER FOUND: " + backendInfo.filters[i].name + "\n   - in: " + url + "\n   - containing: '" + r_strings + "'\n"); }
+                            
                             backendInfo.testing = false;
                             backendInfo.foundBase = true;
                             // If child, use parent image?
@@ -508,7 +512,7 @@ function BackendInfo(filters, devmode) {
             // LOG("IMAGE_TEMP: " + IMAGE_TEMP + "  -- filter.image: " + filter.image);
             if (this.devmode) {
                 this.devmode("\n");
-                this.devmode("=> FILTER FOUND: " + filter.name + "\n");
+//                this.devmode("=> FILTER FOUND: " + filter.name + "\n");
                 
             } else {
                 this.setStatusImage(filter.image);

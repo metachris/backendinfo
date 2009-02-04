@@ -5,18 +5,11 @@
     buttons="help,cancel"
     ondialogcancel=""
     ondialogaccept="return false;"
-    ondialoghelp="alert('help');"
+    ondialoghelp="onHelp();"
     onload="onLoad();"
     style="width:650px;">
     <script src="devwin.js"/>
-    <dialogheader title="Developer Toolbox" description="Custom Filters" />
-
-    <groupbox>
-        <caption label="Instructions" />
-        <label value="1. Select a website to test the filter on" />
-        <label value="2. Copy your filter code in the textbox" />
-        <label value="3. Click on apply" />
-    </groupbox>
+    <dialogheader title="Developer Toolbox" description="" />
 
     <menupopup id="backenddev_recent">
         <menuitem id="backenddev_recent0" label="" style="display:block;" oncommand="setRecent(0);" />
@@ -25,6 +18,11 @@
         <menuitem id="backenddev_recent3" label="" style="display:none;" oncommand="setRecent(3);" />
         <menuitem id="backenddev_recent4" label="" style="display:none;" oncommand="setRecent(4);" />
    </menupopup>
+    
+    <groupbox>
+        <caption label="Filter Code"/>
+        <textbox multiline="true" id="backenddev_filter" rows="25" style="font-family:monospace;" />
+    </groupbox>
 
     <groupbox>
         <caption label="Base URL" />
@@ -32,20 +30,22 @@
             <columns>
                 <column flex="1" />
                 <column />
+                <column />
             </columns>
             <rows>
                 <row>
                     <textbox value="http://" id="backenddev_url" type="autocomplete" autocompletesearch="history" tooltiptext="Here you can search your history or enter any URL" />
                     <button label="Recent" popup="backenddev_recent" tooltiptext="Click here to see your recently checked URLs" />
+                    <button label=" Test Filter" icon="apply" oncommand="showDevStatus();" />
                 </row>
             </rows>
-        </grid>
-         
+        </grid>         
     </groupbox>
-    
+
     <groupbox>
-        <caption label="Filter Code"/>
-        <textbox multiline="true" id="backenddev_filter" rows="25" style="font-family:monospace;" />
-        <button label="Apply Filter" icon="apply" oncommand="showDevStatus();" />
+        <caption label="Instructions" />
+        <label value="1. Copy your filter code in the textbox" />
+        <label value="2. Select a website to test the filter on" />
+        <label value="3. Click on 'Test Filter'" />
     </groupbox>
 </dialog>
