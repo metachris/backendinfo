@@ -2,6 +2,7 @@
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <!DOCTYPE prefwindow SYSTEM "chrome://backendinfo/locale/prefwindow.dtd">
 <prefwindow id="backendinfoPreferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&prefwindow.title;">
+  <script src="options.js"/>
   <prefpane id="pane1" label="Settings">
     <preferences>
       <preference id="boolpref1" name="extensions.backendinfo.boolpref" type="bool"/>
@@ -11,6 +12,6 @@
     <checkbox id="checkboolpref2" preference="boolLoadIcon1" label="Show Load-Icon" />
     <checkbox id="checkboolpref" preference="boolpref1" label="Auto Detect Backends" />
     <checkbox id="checkboolpref3" preference="boolStatusText1" label="Show Text in Statusbar" />
-    <button label="Show Development Options" oncommand="backendinfo.showDevWin();" style="margin-top:20px;" />
+    <button label="Developer Toolbox" oncommand="showDevWin();" style="margin-top:20px;" />
   </prefpane>
 </prefwindow>
