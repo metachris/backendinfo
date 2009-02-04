@@ -1,4 +1,5 @@
 var recentURLs = new Array(); // Max 5
+var prefs;
 
 function addRecent(url) {
     for (var i=0; i<recentURLs.length; i++) {
@@ -41,7 +42,7 @@ function showDevStatus(){
         return ;
     }
     if (filters.length < 1) {
-        alert("Error: No 'filters.push(' in the source code!");
+        alert("Error: No filters found in the source code!");
         return ;
     }
     
@@ -52,6 +53,10 @@ function showDevStatus(){
         }, 
         out:null
     };       
+
+    prefs.setCharPref("testurl", recentURLs.join(" | "));
+    prefs.setCharPref("testfilters", document.getElementById("backenddev_filter").value);
+
     window.openDialog("chrome://backendinfo/content/devstatus.xul", "", "chrome, dialog, resizable=yes", params).focus();
 }
 
@@ -64,4 +69,38 @@ function setRecent(i) {
 
 function onLoad() {
     // Load recent urls and previous filter
+    prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService);
+    prefs = this.prefs.getBranch("extensions.backendinfo.");
+    prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    
+    if (prefs.getCharPref("testurl")) {
+        for each (var u in prefs.getCharPref("testurl").split(" | ")) {
+            if ((u) && (u != "false")) {
+                recentURLs.push(u);
+            }
+        }
+    }
+    
+    // Show Last
+    if (recentURLs.length > 0) {
+        document.getElementById("backenddev_url").value = recentURLs[recentURLs.length-1];
+        showRecentURLs();
+    } 
+    
+    // Show Last Filter
+    if (prefs.getCharPref("testfilters")) {
+        document.getElementById("backenddev_filter").value = prefs.getCharPref("testfilters");
+    }    
+}
+
+function onHelp() {
+    window.open("http://www.backendinfo.com/new-filter/developer-toolbox/");
+    return ;
+/*    
+    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
+    var mainWindow = wm.getMostRecentWindow("navigator:browser");
+    gBrowser = mainWindow.getBrowser();
+    gBrowser.selectedTab = gBrowser.addTab("http://www.backendinfo.com");
+    gBrowser.focus();
+*/
 }

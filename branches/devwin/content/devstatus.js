@@ -2,7 +2,7 @@ function $(e) { return document.getElementById(e); }
 function L(s) {
     if (s.indexOf("FILTER") > -1) {
         // Result
-        if (s.indexOf("NOT") > -1) {
+        if (s.indexOf("NO ") > -1) {
             // Not found
             $("backendstatus_status").value = "Filter Not Found";
             $("backendstatus_status").style.color = "red";            
