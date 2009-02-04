@@ -1,22 +1,30 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
-<dialog id="donothing" title="Dialog example"
-   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-   buttons="accept,cancel"
-   buttonlabelcancel="Cancel"
-   buttonlabelaccept="Save"
-   ondialogaccept="return doOK();"
-   ondialogcancel="return doCancel();">
-    
-    <dialogheader title="Options" description="My preferences"/>
+<dialog id="donothing" title="BackendInfo Developer Toolbox"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    buttons="help,cancel"
+    ondialogcancel=""
+    ondialogaccept="return false;"
+    ondialoghelp="alert('help');"
+    style="width:650px;">
+    <script src="devwin.js"/>
+    <dialogheader title="Developer Toolbox" description="Filter Test" />
+
     <groupbox>
-      <caption label="Colour"/>
-      <radiogroup>
-        <radio label="Red"/>
-        <radio label="Green" selected="true"/>
-        <radio label="Blue"/>
-      </radiogroup>
-      <label value="Nickname"/>
-      <textbox />
-   </groupbox>
+        <caption label="Instructions" />
+        <label value="1. Select a website to test the filter on" />
+        <label value="2. Copy your filter code in the textbox" />
+        <label value="3. Click on apply" />
+    </groupbox>
+    
+    <groupbox>
+        <caption label="Test Website URL" />
+         <textbox value="http://" id="backenddev_url" />
+    </groupbox>
+    
+    <groupbox>
+        <caption label="Filter Code"/>
+        <textbox multiline="true" id="backenddev_filter" rows="25" style="font-family:monospace;" />
+        <button label="Apply Filter" icon="apply" oncommand="showDevStatus();" />
+    </groupbox>
 </dialog>
