@@ -516,6 +516,20 @@ function BackendInfo(filters) {
             } 
         }
     }    
+    
+    this.showDevWin = function() {
+        LOG("show dev window");
+        var params = {inn:{name:"foo", description:"bar", enabled:true}, out:null};       
+         window.openDialog("chrome://backendinfo/content/devwin.xul", "", "chrome, dialog, modal, resizable=yes", params).focus();
+          if (params.out) {
+              // User clicked ok. Process changed arguments; e.g. write them to disk or whatever
+              alert("ok");
+          } else {
+              // User clicked cancel. Typically, nothing is done here.
+              alert("cancel");
+          }
+
+    }
 }
 
 window.addEventListener("load", function(e) { 
