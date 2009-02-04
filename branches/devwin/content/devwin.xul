@@ -9,7 +9,7 @@
     onload="onLoad();"
     style="width:650px;">
     <script src="devwin.js"/>
-    <dialogheader title="Developer Toolbox" description="Filter Test" />
+    <dialogheader title="Developer Toolbox" description="Custom Filters" />
 
     <groupbox>
         <caption label="Instructions" />

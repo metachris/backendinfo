@@ -9,6 +9,7 @@
   <script src="filters_moinmoin.js"/>
   <script src="filters_dokuwiki.js"/>
   <script src="filters_joomla.js"/>
+  <script src="backendinfo.js"/>
   <script src="overlay.js"/>
   <stringbundleset id="stringbundleset">
     <stringbundle id="backendinfo-strings" src="chrome://backendinfo/locale/backendinfo.properties"/>
