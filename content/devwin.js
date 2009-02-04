@@ -74,13 +74,14 @@ function onLoad() {
     prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
     
     if (prefs.getCharPref("testurl")) {
-        for each (var u in prefs.getCharPref("testurl").split(" | ")) {
-            if ((u) && (u != "false")) {
-                recentURLs.push(u);
-            }
+        urls = prefs.getCharPref("testurl").split(" | ");
+        for (var i=0; i<urls.length; i++) {
+            if ((urls[i]) && (urls[i] != "false")) {
+                recentURLs.push(urls[i]);
+            }        
         }
     }
-    
+   
     // Show Last
     if (recentURLs.length > 0) {
         document.getElementById("backenddev_url").value = recentURLs[recentURLs.length-1];
