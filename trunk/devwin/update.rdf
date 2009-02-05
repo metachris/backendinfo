@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:em="http://www.mozilla.org/2004/em-rdf#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="urn:mozilla:extension:backendinfo@linuxuser.at"
+                   em:signature="MIGTMA0GCSqGSIb3DQEBDQUAA4GBADwLGlxAarbbWO0IZ8XuZCcm7uVauOOp8+2fKaUTl4cBjX9JJHEHsipR/1TcbtJ/6Os+PdhExFBJF0ImoizGQP02AaHlL0TMRblOHy2v677xeT0DF/uMJpo3cmFhqDICx13WD6nTNh34aCYr30SJFVQCOCRL2qoW4ITK5JDRtP4L">
+    <em:updates RDF:resource="rdf:#$S4+N42"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="rdf:#$W4+N42"
+                   em:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
+                   em:minVersion="1.5"
+                   em:maxVersion="3.2a1pre"
+                   em:updateLink="http://www.backendinfo.com/release/backendinfo-1.2.5.xpi"
+                   em:updateHash="sha1:33cc16c68c333ba6ee2d2176545c5b1bf052f4ad" />
+  <RDF:Seq RDF:about="rdf:#$S4+N42">
+    <RDF:li RDF:resource="rdf:#$T4+N42"/>
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$T4+N42"
+                   em:version="1.2.5">
+    <em:targetApplication RDF:resource="rdf:#$W4+N42"/>
+  </RDF:Description>
+</RDF:RDF>
