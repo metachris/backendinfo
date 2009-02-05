@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://backendinfo/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://backendinfo/locale/backendinfo.dtd">
+<overlay id="backendinfo-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script src="filters.js"/>
+  <script src="filters_drupal.js"/>
+  <script src="filters_moinmoin.js"/>
+  <script src="filters_dokuwiki.js"/>
+  <script src="filters_joomla.js"/>
+  <script src="backendinfo.js"/>
+  <script src="overlay.js"/>
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="backendinfo-strings" src="chrome://backendinfo/locale/backendinfo.properties"/>
+  </stringbundleset>
+<popupset>
+  <menupopup id="clipmenu">
+    <menuitem id="clipmenu1" label="" onclick="backendInfo.clickCheck(1)" tooltiptext="Detect backend software of this site" />
+    <menuitem id="clipmenu2" label="" onclick="backendInfo.clickCheck(2)" tooltiptext="Detect backend software of this site" />
+    <menuitem id="clipmenu3" label="custom url" onclick="backendInfo.clickCheck(3)" tooltiptext="Detect backend software of this site" />
+    <checkbox id="clipmenu4" label="show text" checked="true" onclick="backendInfo.clickText()" />
+  </menupopup>
+</popupset>
+<statusbar id="status-bar">
+	<statusbarpanel id="backendinfo_status"
+		label=""
+        onclick="backendInfo.clickStatusIcon(event)"
+        tooltiptext="">
+        <box id="backendinfo_statusbox"
+            title=""
+            width="16"
+            height="16"
+            context="clipmenu"
+            tooltiptext="Detect Backend"
+            />
+    </statusbarpanel>        
+	<statusbarpanel id="backendinfo_text"
+	    tooltiptext="Click for more options"
+        popup="clipmenu"
+        context="clipmenu"
+		label="" />
+</statusbar>
+</overlay>
