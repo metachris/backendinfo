@@ -21,7 +21,7 @@
     
     <groupbox>
         <caption label="Filter Code"/>
-        <textbox multiline="true" id="backenddev_filter" rows="25" style="font-family:monospace;" />
+        <textbox multiline="true" id="backenddev_filter" rows="20" style="font-family:monospace;" />
     </groupbox>
 
     <groupbox>

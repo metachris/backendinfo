@@ -393,3 +393,20 @@ filters.push({
         
     )
 });
+
+filters.push({
+    name: "Trac",
+    image: "chrome://backendinfo/skin/trac.png",
+    require: new Array({ 
+        url: '/', contains: new Array('/chrome/common/js/trac.js') }
+    )
+});
+
+filters.push({
+    name: "Bugzilla",
+    image: "chrome://backendinfo/skin/bugzilla.png",
+    require: new Array(
+        { url: '/', contains: new Array('show_bug.cgi', 'skins/standard/global.css', /bugzilla/i) },
+        { url: '/', contains: new Array('query.cgi', 'skins/standard/global.css', /bugzilla/i) }
+    )
+});

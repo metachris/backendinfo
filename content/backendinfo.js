@@ -41,7 +41,9 @@ function BackendInfo(filters, devmode) {
     this.prefs = false;
     this.always200 = false;   // Some websites return 404 for any url (even test_url). keep track of that behavious
     this.changeFromContextMenu = false; // Needed because click on context menu 'show text' triggers the observer
-    
+
+    this.performAlways200Check = false;
+        
     /* On Load -- Initialization */
     this.load = function() {
         if (!(document.getElementById("clipmenu"))) {
@@ -51,6 +53,10 @@ function BackendInfo(filters, devmode) {
             document.getElementById("backendinfo_text").tooltipText = "detected backend";
         }
 
+        if (!(this.performAlways200Check)) {
+            this.always200 = true;
+        }
+        
         this.container = gBrowser.tabContainer;
         this.container.addEventListener("TabSelect", changeTab, false);
 
@@ -244,7 +250,7 @@ function BackendInfo(filters, devmode) {
         }
 
         this.testing = true;
-        if ((preSearchTest) && (!(this.devmode))) {
+        if ((preSearchTest) && (!(this.devmode)) && (this.performAlways200Check)) {
             // Only check the test URL (always 200?)
             this.cacheURL(url + this.test_url, this.preSearchComplete);
             return ;
